@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى شريك حياتي 🤍</title>
+    <style>
+        :root {
+            --primary-color: #d11a2a;
+            --secondary-color: #ffb3b3;
+            --bg-color: #fff5f5;
+            --text-color: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            user-select: none; /* لمنع تحديد النصوص بالخطأ أثناء الضغط المكرر */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(209, 26, 42, 0.1);
+            text-align: center;
+            position: relative;
+            z-index: 10; /* لتبقى الأزرار والنصوص فوق تأثير القلوب */
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 80%;
+            margin: 5px auto;
+        }
+
+        .btn:hover {
+            background-color: #b01420;
+            transform: scale(1.05);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .nav-btn:disabled {
+            border-color: #ccc;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            margin-top: 15px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 3.33%;
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        /* تأثيرات القلوب الثابتة والمتحركة */
+        .heart {
+            color: var(--primary-color);
+            font-size: 50px;
+            animation: beat 1s infinite alternate;
+        }
+
+        /* القلوب المتطايرة عند الضغط */
+        .floating-heart {
+            position: absolute;
+            color: var(--primary-color);
+            font-size: 24px;
+            pointer-events: none; /* لتجنب حجب الضغطات عن الأزرار */
+            z-index: 1;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes beat {
+            to { transform: scale(1.2); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -150px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .choice-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="screen active" id="screen1">
+        <div class="heart">❤️</div>
+        <h1>مرحباً بك يا كل دنيتي...</h1>
+        <p>هذا الكود صنعته بقلبي لك خصيصاً، أريدك أن تتصفحه واجهة بعد واجهة.. (جرب تضغط في أي مكان على الشاشة 🤭)</p>
+        <button class="btn" onclick="nextScreen()">اضغط هنا لوقتك وثوانيك معي</button>
+    </div>
+
+    <div class="screen" id="screen2">
+        <h1>أولاً: اعتراف صغير</h1>
+        <p>الحياة بدون رضاك تفقد لونها، والكون يضيق بي عندما أشعر أنني ضايقتك ولو بقصد أو بدون قصد.</p>
+    </div>
+
+    <div class="screen" id="screen3">
+        <h1>أنا آسفة...</h1>
+        <p>آسفة على كل لحظة لم أستطع فيها أن أحتويك كما تستحق، وعلى أي كلمة خرجت ولم تكن بقدر حبي لك.</p>
+    </div>
+
+    <div class="screen" id="screen4">
+        <h1>مكانتك في قلبي</h1>
+        <p>أنت لست مجرد زوج، أنت الأمان، السند، والضحكة التي أبحث عنها في نهاية كل يوم متعب.</p>
+    </div>
+
+    <div class="screen" id="screen5">
+        <h1>سؤال سريع 💬</h1>
+        <p>هل تعلم كم أحبك؟</p>
+        <div class="choice-btns">
+            <button class="btn" onclick="nextScreen()">كثيراً جداً</button>
+            <button class="btn" onclick="nextScreen()">أكثر مما أتخيل</button>
+        </div>
+    </div>
+
+    <div class="screen" id="screen6">
+        <h1>الإجابة الصحيحة!</h1>
+        <p>أحبك أكثر مما تتخيل، وأكثر من كل الكلمات التي يمكن أن تُكتب أو تُقال.</p>
+    </div>
+
+    <div class="screen" id="screen7">
+        <h1>شريط الذكريات 🫀</h1>
+        <p>أتذكر أول يوم جمعنا؟ كيف كانت نبضات قلبي؟ منذ ذلك اليوم وأنا أحمد الله عليك كل ليلة.</p>
+    </div>
+
+    <div class="screen" id="screen8">
+        <h1>أيامنا معاً</h1>
+        <p>كل يوم يمر علينا وأنا بجانبك، هو عمر جديد يُكتب لي. عشنا تفاصيل حلوة ومرّة، وكانت كُلّها معك جنّة.</p>
+    </div>
+
+    <div class="screen" id="screen9">
+        <h1>عهد ووعد 🤝</h1>
+        <p>أعدك أن أكون دائماً الصدر الدافئ الذي تلجأ إليه، وأن أحمي حبنا من أي زعل صغير.</p>
+    </div>
+
+    <div class="screen" id="screen10">
+        <h1>هل قبلت اعتذاري؟ 🥺</h1>
+        <p>اختر إجابتك بكل صراحة:</p>
+        <div class="choice-btns">
+            <button class="btn" onclick="nextScreen()">نعم، قبلت يا روحي</button>
+            <button class="btn" onclick="alert('امممم، جرب تضغط الزر الأول أحسن لك! 😂❤️');">لا، لسه زعلان</button>
+        </div>
+    </div>
+
+    <div class="screen" id="screen11">
+        <h1>شكراً لقلبك الكبير!</h1>
+        <p>أعلم أن قلبك أبيض ولا يحمل عليّ، وهذا ما يجعلني أعشقك كل يوم أكثر.</p>
+    </div>
+
+    <div class="screen" id="screen12">
+        <h1>أشياء أحبها فيك ✨</h1>
+        <p>أحب نبرة صوتك عندما تطمئنني، وأحب اهتمامك بأدق تفاصيلي.</p>
+    </div>
+
+    <div class="screen" id="screen13">
+        <h1>وأيضاً...</h1>
+        <p>أحب ضحكتك التي تملأ البيت دفئاً، وسندك لي في كل خطوة أخطوها في حياتي ودراستي وطموحي.</p>
+    </div>
+
+    <div class="screen" id="screen14">
+        <h1>إذا كنت متعباً اليوم..</h1>
+        <p>خذ نفساً عميقاً، وتذكر أن هناك قلباً ينبض في هذا العالم يتمنى أن يأخذ عنك كل ضيق وتعب.</p>
+    </div>
+
+    <div class="screen" id="screen15">
+        <h1>نصف الطريق 🏁</h1>
+        <p>وصلنا للواجهة رقم 15، وما زال في جعبتي الكثير من الحب. اقلب الصفحة يا شريك العمر.</p>
+        <div class="heart" style="animation-duration: 0.5s;">💖</div>
+    </div>
+
+    <div class="screen" id="screen16">
+        <h1>شعر لعينيك 📜</h1>
+        <p>"وما كنتُ أومنُ بالعيونِ وفِعلِها.. حتى دَهَتني في الهوى عيناكِ"<br>أنت قصيدتي الأجمل دائماً.</p>
+    </div>
+
+    <div class="screen" id="screen17">
+        <h1>تفاصيلنا اليومية ☕</h1>
+        <p>حتى كوب القهوة البسيط معك، له طعم مختلف تماماً عن أي شيء آخر في العالم.</p>
+    </div>
+
+    <div class="screen" id="screen18">
+        <h1>دعائي لك 🤲</h1>
+        <p>اللهم احفظ لي زوجي وسندي، ولا تريني فيه بأساً يبكيني، وأدم وجوده في حياتي حباً وسنداً.</p>
+    </div>
+
+    <div class="screen" id="screen19">
+        <h1>لعبة سريعة 🎮</h1>
+        <p>اضغط على القلب لتوليد طاقة حب إضافية!</p>
+        <button class="btn" onclick="addLove()">اضغط هنا ⚡</button>
+        <p id="love-status" style="font-size:14px; color:var(--primary-color);"></p>
+    </div>
+
+    <div class="screen" id="screen20">
+        <h1>وجودك يغيرني</h1>
+        <p>معك أشعر أنني شخص أفضل، طموحاتي تكبر، وشغفي في الحياة يزداد لأنك بجانبي.</p>
+    </div>
+
+    <div class="screen" id="screen21">
+        <h1>رسالة سرية 🤫</h1>
+        <p>امسح على الشاشة بقلبك.. أنا محظوظة جداً لأنك اخترتني لأكون شريكة عمرك.</p>
+    </div>
+
+    <div class="screen" id="screen22">
+        <h1>خططنا القادمة ✈️</h1>
+        <p>أنتظر بكل شوق كل الأيام الجميلة والمغامرات والنجاحات التي سنحققها معاً يداً بيد.</p>
+    </div>
+
+    <div class="screen" id="screen23">
+        <h1>في الشدة قبل الرخاء</h1>
+        <p>لو مالت الدنيا بنا، سأكون عكازك. ولو أظلم العالم في وجهك، سأكون ضوءك.</p>
+    </div>
+
+    <div class="screen" id="screen24">
+        <h1>أمنيتي الليلة 🌟</h1>
+        <p>أن تنام وأنت راضٍ عني تماماً، وأن تكون مرتاح البال، لأن راحتك هي راحتي.</p>
+    </div>
+
+    <div class="screen" id="screen25">
+        <h1>اقتربنا من الشاشة 30..</h1>
+        <p>هل تعبت من القراءة؟ أتمنى أن تكون هذه الكلمات قد لامست قلبك الطيب الفاتن.</p>
+    </div>
+
+    <div class="screen" id="screen26">
+        <h1>∞</h1>
+        <p>حبي لك ليس له نهاية، هو حلقة مستمرة تتجدد مع كل شروق شمس.</p>
+    </div>
+
+    <div class="screen" id="screen27">
+        <h1>شكراً لك</h1>
+        <p>شكراً لكونك "أنت".. بكل تفاصيلك، بحنانك، بحكمتك، وباحتوائك لي دائماً.</p>
+    </div>
+
+    <div class="screen" id="screen28">
+        <h1>الواجهة قبل الأخيرة ⏳</h1>
+        <p>الآن، خذ هذه الوردة الافتراضية 🌹.. واستعد للواجهة الأخيرة والختام.</p>
+    </div>
+
+    <div class="screen" id="screen29">
+        <h1>أحبك دائماً وأبداً</h1>
+        <p>مهما حدث ومهما اختلفنا، مكانك في يسار صدري ثابت لا يتغير ولن يملأه أحد غيرك.</p>
+    </div>
+
+    <div class="screen" id="screen30">
+        <h1>الواجهة 30: النهاية وبداية جديدة 🤍</h1>
+        <p>الآن، اغلق الموقع.. والتفت إليّ أو أرسل لي رسالة تخبرني فيها أن صافي يا لبن؟ وبانتظار ابتسامتك! ربي يحفظك لي يا أحلى نصيب.</p>
+        <div class="heart">👑❤️</div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="prevScreen()" disabled>السابق</button>
+        <span id="screenIndicator" style="font-size: 14px; align-self: center;">1 / 30</span>
+        <button class="nav-btn" id="nextBtn" onclick="nextScreen()">التالي</button>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progressBar"></div>
+    </div>
+</div>
+
+<script>
+    let currentScreen = 1;
+    const totalScreens = 30;
+
+    function updateNavigation() {
+        document.getElementById('screenIndicator').innerText = `${currentScreen} / ${totalScreens}`;
+        const progressPercent = (currentScreen / totalScreens) * 100;
+        document.getElementById('progressBar').style.width = `${progressPercent}%`;
+
+        document.getElementById('prevBtn').disabled = (currentScreen === 1);
+        if (currentScreen === totalScreens) {
+            document.getElementById('nextBtn').innerText = "تمت ✨";
+            document.getElementById('nextBtn').disabled = true;
+        } else {
+            document.getElementById('nextBtn').innerText = "التالي";
+            document.getElementById('nextBtn').disabled = false;
+        }
+    }
+
+    function nextScreen() {
+        if (currentScreen < totalScreens) {
+            document.getElementById(`screen${currentScreen}`).classList.remove('active');
+            currentScreen++;
+            document.getElementById(`screen${currentScreen}`).classList.add('active');
+            updateNavigation();
+        }
+    }
+
+    function prevScreen() {
+        if (currentScreen > 1) {
+            document.getElementById(`screen${currentScreen}`).classList.remove('active');
+            currentScreen--;
+            document.getElementById(`screen${currentScreen}`).classList.add('active');
+            updateNavigation();
+        }
+    }
+
+    let clickCount = 0;
+    function addLove() {
+        clickCount++;
+        const status = document.getElementById('love-status');
+        if(clickCount < 5) {
+            status.innerText = `تم إرسال ${clickCount} نبضات حب إضافية!`;
+        } else {
+            status.innerText = `تم ملء خزان الحب بالكامل! 😍❤️❤️`;
+        }
+    }
+
+    // الكود المسؤول عن توليد القلوب عند الضغط في أي مكان
+    document.addEventListener('click', function(e) {
+        // مصفوفة تحتوي على أشكال مختلفة للقلوب للتنويع
+        const heartTypes = ['❤️', '💖', '💝', '💕', '💘'];
+        const randomHeart = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+        
+        const heartSpan = document.createElement('span');
+        heartSpan.classList.add('floating-heart');
+        heartSpan.innerText = randomHeart;
+        
+        // تحديد موضع القلب بناءً على مكان ضغطة الإصبع أو الماوس
+        heartSpan.style.left = e.clientX + 'px';
+        heartSpan.style.top = e.clientY + 'px';
+        
+        document.body.appendChild(heartSpan);
+        
+        // حذف عنصر القلب بعد انتهاء تأثير الأنيمايشن تماماً لتوفير ذاكرة التصفح
+        setTimeout(() => {
+            heartSpan.remove();
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>
